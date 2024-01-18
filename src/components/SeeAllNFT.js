@@ -50,11 +50,11 @@ export default function SeeAllNFT() {
     //Fetch all the details of every NFT from the contract and display
     const items = await Promise.all(transaction.map(async i => {
       var tokenURI = await contract.tokenURI(i.tokenId);
-      console.log("getting this tokenUri", tokenURI);
-    //   tokenURI = GetIpfsUrlFromPinata(tokenURI);
+      // console.log("getting this tokenUri", tokenURI);
+      tokenURI = GetIpfsUrlFromPinata(tokenURI);
       let meta = await axios.get(tokenURI);
       meta = meta.data;
-
+      console.log("meta: ", meta);
       let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
       let item = {
         price,
