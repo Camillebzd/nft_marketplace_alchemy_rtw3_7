@@ -1,5 +1,4 @@
 import Navbar from "./Navbar";
-import { useLocation, useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -12,7 +11,7 @@ export default function Profile () {
 
   useEffect(() => {
     const init = async () => {
-      if(window.ethereum == undefined)
+      if(window.ethereum === undefined)
         return;
       const accounts = await window.ethereum.request({method: 'eth_accounts'});       
       if (accounts.length)
@@ -107,7 +106,7 @@ export default function Profile () {
             })}
           </div>
           <div className="mt-10 text-xl">
-              {data.length == 0 ? "Oops, No NFT data to display (Are you logged in?)":""}
+              {data.length === 0 ? "Oops, No NFT data to display (Are you logged in?)":""}
           </div>
         </div>
       </div>

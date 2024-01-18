@@ -1,12 +1,6 @@
-import logo from '../logo_3.png';
 import fullLogo from '../full_logo.png';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams
+  Link
 } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
@@ -27,15 +21,6 @@ const [currAddress, updateAddress] = useState('0x');
     updateAddress(addr);
   }
 
-  // function updateButton() {
-  //   const ethereumButton = document.querySelector('.enableEthereumButton');
-  //   ethereumButton.textContent = "Connected";
-  //   ethereumButton.classList.remove("hover:bg-blue-70");
-  //   ethereumButton.classList.remove("bg-blue-500");
-  //   ethereumButton.classList.add("hover:bg-green-70");
-  //   ethereumButton.classList.add("bg-green-500");
-  // }
-
   async function connectWebsite() {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     if(chainId !== CHAINID) {
@@ -45,7 +30,7 @@ const [currAddress, updateAddress] = useState('0x');
         params: [{ chainId: CHAINID }],
       })
     }
-    if (connected == true)
+    if (connected === true)
       return;
     await window.ethereum.request({ method: 'eth_requestAccounts' })
       .then(() => {
@@ -59,7 +44,7 @@ const [currAddress, updateAddress] = useState('0x');
 
   useEffect(() => {
     const init = async () => {
-      if(window.ethereum == undefined)
+      if(window.ethereum === undefined)
         return;
       const accounts = await window.ethereum.request({method: 'eth_accounts'});       
       if (accounts.length) {
@@ -99,7 +84,7 @@ const [currAddress, updateAddress] = useState('0x');
           </div>
           </Link>
         </li>
-        <li className='w-2/6'>
+        <li className='w-3/6'>
           <ul className='lg:flex justify-between font-bold mr-10 text-lg'>
             {location.pathname === "/" ? 
             <li className='border-b-2 hover:pb-0 p-2'>
@@ -109,6 +94,15 @@ const [currAddress, updateAddress] = useState('0x');
             <li className='hover:border-b-2 hover:pb-0 p-2'>
               <Link to="/">Marketplace</Link>
             </li>              
+            }
+            {location.pathname === "/seeAllNFT" ? 
+            <li className='border-b-2 hover:pb-0 p-2'>
+              <Link to="/seeAllNFT">See All NFT</Link>
+            </li>
+            :
+            <li className='hover:border-b-2 hover:pb-0 p-2'>
+              <Link to="/seeAllNFT">See All NFT</Link>
+            </li>
             }
             {location.pathname === "/sellNFT" ? 
             <li className='border-b-2 hover:pb-0 p-2'>

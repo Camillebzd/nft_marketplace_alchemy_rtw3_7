@@ -14,7 +14,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 });
 
 const PRIVATE_KEY =
-  process.env.REACT_APP_PRIVATE_KEY ||
+  process.env.PRIVATE_KEY ||
   "";
 
 const ETHERLINK_RPC_URL =
@@ -33,7 +33,7 @@ const NIGHTLY_PRIVATE_KEY =
   process.env.NIGHTLY_PRIVATE_KEY ||
   "";
 const REACT_APP_NIGHTLY_CHAINID =
-  process.env.REACT_APP_NIGHTLY_CHAINID ||
+  Number(process.env.REACT_APP_NIGHTLY_CHAINID) ||
   1337;
 
 module.exports = {

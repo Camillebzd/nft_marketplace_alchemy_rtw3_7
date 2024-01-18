@@ -1,16 +1,16 @@
 import Navbar from "./Navbar";
-import axie from "../tile.jpeg";
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetIpfsUrlFromPinata } from "../utils";
 
 export default function NFTPage (props) {
   const [data, updateData] = useState({});
-  const [dataFetched, updateDataFetched] = useState(false);
   const [message, updateMessage] = useState("");
   const [currAddress, updateCurrAddress] = useState("0x");
+  const params = useParams();
+  const tokenId = params.tokenId;
 
   async function getNFTData(tokenId) {
     const ethers = require("ethers");
@@ -26,7 +26,7 @@ export default function NFTPage (props) {
     tokenURI = GetIpfsUrlFromPinata(tokenURI);
     let meta = await axios.get(tokenURI);
     meta = meta.data;
-    console.log(listedToken);
+    const isForSale = (await contract.idToListedToken(tokenId))[4];
 
     let item = {
       price: meta.price,
@@ -36,10 +36,10 @@ export default function NFTPage (props) {
       image: meta.image,
       name: meta.name,
       description: meta.description,
+      isForSale: isForSale
     }
     console.log(item);
     updateData(item);
-    updateDataFetched(true);
     console.log("address", addr)
     updateCurrAddress(addr);
   }
@@ -61,30 +61,32 @@ export default function NFTPage (props) {
 
       alert('You successfully bought the NFT!');
       updateMessage("");
+      window.location.replace("/");
     }
     catch(e) {
       alert("Upload Error"+e);
     }
   }
 
-  const handleEmpty = () => {
-    return (
-      <div style={{"min-height":"100vh"}}>
-        <Navbar></Navbar>
-        <div className="text-center mt-20 text-xl">Bad NFT...</div>
-      </div>
-    );
-  }
-
-  const params = useParams();
-  const tokenId = params.tokenId;
-  if (tokenId == 'undefined')
-    return handleEmpty();
-
-  if(!dataFetched)
+  useEffect(() => {
+    if (tokenId === 'undefined' || isNaN(tokenId))
+      return;
     getNFTData(tokenId);
-  if(typeof data.image == "string")
-    data.image = GetIpfsUrlFromPinata(data.image);
+  // if(typeof data.image == "string")
+  //   data.image = GetIpfsUrlFromPinata(data.image);
+  }, [tokenId]);
+
+  const printAction = () => {
+    if (currAddress !== data.owner && currAddress !== data.seller) {
+      if (data.isForSale) {
+        return <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
+      } else {
+        return <div className="text-emerald-700">This NFT is not listed for sale</div>
+      }
+    } else {
+      return <div className="text-emerald-700">You are the owner of this NFT</div>
+    }
+  };
 
   return(
     <div style={{"height":"100vh"}}>
@@ -108,11 +110,7 @@ export default function NFTPage (props) {
             Seller: <span className="text-sm">{data.seller}</span>
           </div>
           <div>
-            { currAddress != data.owner && currAddress != data.seller ?
-                <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
-                : <div className="text-emerald-700">You are the owner of this NFT</div>
-            }
-            
+            {printAction()}
             <div className="text-green text-center mt-3">{message}</div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { GetIpfsUrlFromPinata } from "../utils";
 
-export default function Marketplace() {
+export default function SeeAllNFT() {
   const [data, updateData] = useState([]);
   const [dataFetched, updateFetched] = useState(false);
 
@@ -15,11 +15,11 @@ export default function Marketplace() {
         return;
       const accounts = await window.ethereum.request({method: 'eth_accounts'});       
       if (accounts.length)
-        getAllListedNFTs();
+        getAllNFTs();
       window.ethereum.on("accountsChanged", accounts => {
         if (accounts.length > 0) {
           console.log(`Account connected: ${accounts[0]}`);
-          getAllListedNFTs();
+          getAllNFTs();
         }
         else {
           console.log("Account disconnected");
@@ -31,17 +31,17 @@ export default function Marketplace() {
     init();
   }, []);
 
-  async function getAllListedNFTs() {
+  async function getAllNFTs() {
     const ethers = require("ethers");
     //After adding your Hardhat network to your metamask, this code will get providers and signers
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     //Pull the deployed contract instance
-    let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer)
+    let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer);
     //create an NFT Token
     let transaction;
     try {
-      transaction = await contract.getAllListedNFTs();
+      transaction = await contract.getAllNFTs();
     } catch (e) {
       console.log("ERRRROOOORR: ", e);
       return;
@@ -51,7 +51,7 @@ export default function Marketplace() {
     const items = await Promise.all(transaction.map(async i => {
       var tokenURI = await contract.tokenURI(i.tokenId);
       console.log("getting this tokenUri", tokenURI);
-      tokenURI = GetIpfsUrlFromPinata(tokenURI);
+    //   tokenURI = GetIpfsUrlFromPinata(tokenURI);
       let meta = await axios.get(tokenURI);
       meta = meta.data;
 
@@ -91,7 +91,7 @@ export default function Marketplace() {
       <Navbar></Navbar>
       <div className="flex flex-col place-items-center mt-20">
         <div className="md:text-xl font-bold text-white">
-          Top NFTs
+          All the NFTs
         </div>
         {!dataFetched && (<div className="flex mt-10">
           <p className="text-white">No data received, connect your wallet or reload the page.</p>
