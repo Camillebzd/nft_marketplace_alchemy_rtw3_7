@@ -28,6 +28,13 @@ const NIGHTLY_RPC_URL =
 const ETHERLINK_API_KEY = 
   process.env.REACT_APP_ETHERLINK_API_KEY || 
   "";
+// Specific private key for the nightly chain with founds
+const NIGHTLY_PRIVATE_KEY =
+  process.env.NIGHTLY_PRIVATE_KEY ||
+  "";
+const REACT_APP_NIGHTLY_CHAINID =
+  process.env.REACT_APP_NIGHTLY_CHAINID ||
+  1337;
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -41,9 +48,9 @@ module.exports = {
       accounts: [PRIVATE_KEY],
     },
     nightly: {
-      chainId: 20240109,
+      chainId: REACT_APP_NIGHTLY_CHAINID,
       url: NIGHTLY_RPC_URL,
-      accounts: [PRIVATE_KEY]
+      accounts: [NIGHTLY_PRIVATE_KEY]
     }
   },
   solidity: {
@@ -73,10 +80,10 @@ module.exports = {
       },
       {
         network: "nightly",
-        chainId: 20240109,
+        chainId: REACT_APP_NIGHTLY_CHAINID,
         urls: {
-          apiURL: "https://explorer.2024-01-09.etherlink-nightly.tzalpha.net/api",
-          browserURL: "https://explorer.2024-01-09.etherlink-nightly.tzalpha.net"
+          apiURL: "https://explorer.2024-01-15.etherlink-nightly.tzalpha.net/api",
+          browserURL: "https://explorer.2024-01-15.etherlink-nightly.tzalpha.net"
         }
       }
     ]

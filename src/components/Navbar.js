@@ -11,6 +11,8 @@ import {
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
+const CHAINID = '0x' + Number(process.env.REACT_APP_NIGHTLY_CHAINID).toString(16);
+
 function Navbar() {
 
 const [connected, toggleConnect] = useState(false);
@@ -36,11 +38,11 @@ const [currAddress, updateAddress] = useState('0x');
 
   async function connectWebsite() {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if(chainId !== '0x134d6ed') {
+    if(chainId !== CHAINID) {
       //alert('Incorrect network! Switch your metamask network to Rinkeby');
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x134d6ed' }],
+        params: [{ chainId: CHAINID }],
       })
     }
     if (connected == true)
