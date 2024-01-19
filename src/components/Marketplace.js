@@ -73,8 +73,8 @@ export default function Marketplace() {
   }
 
   const printNFTs = () => {
-    if (data.length == 0) {
-      return <p className="mt-5 text-white">There is no NFTs for sell right now!</p>
+    if (data.length === 0) {
+      return <p className="mt-5 text-white">There are no NFTs for sell right now!</p>
     } else {
       return (
         <div className="flex mt-5 justify-between flex-wrap max-w-screen-xl text-center">
@@ -87,7 +87,7 @@ export default function Marketplace() {
   }
 
   return (
-    <div style={{"min-height":"100vh"}}>
+    <div style={{"minHeight":"100vh"}}>
       <Navbar></Navbar>
       <div className="flex flex-col place-items-center mt-20">
         <div className="md:text-xl font-bold text-white">

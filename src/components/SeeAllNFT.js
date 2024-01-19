@@ -73,7 +73,7 @@ export default function SeeAllNFT() {
   }
 
   const printNFTs = () => {
-    if (data.length == 0) {
+    if (data.length === 0) {
       return <p className="mt-5 text-white">There is no NFTs for sell right now!</p>
     } else {
       return (
@@ -87,7 +87,7 @@ export default function SeeAllNFT() {
   }
 
   return (
-    <div style={{"min-height":"100vh"}}>
+    <div style={{"minHeight":"100vh"}}>
       <Navbar></Navbar>
       <div className="flex flex-col place-items-center mt-20">
         <div className="md:text-xl font-bold text-white">

@@ -3,6 +3,7 @@ import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import NFTTile from "./NFTTile";
+import { GetIpfsUrlFromPinata } from "../utils";
 
 export default function Profile () {
   const [data, updateData] = useState([]);
@@ -51,7 +52,8 @@ export default function Profile () {
       */
       
       const items = await Promise.all(transaction.map(async i => {
-        const tokenURI = await contract.tokenURI(i.tokenId);
+        let tokenURI = await contract.tokenURI(i.tokenId);
+        tokenURI = GetIpfsUrlFromPinata(tokenURI);
         let meta = await axios.get(tokenURI);
         meta = meta.data;
 
@@ -79,7 +81,7 @@ export default function Profile () {
   }
 
   return (
-    <div className="profileClass" style={{"min-height":"100vh"}}>
+    <div className="profileClass" style={{"minHeight":"100vh"}}>
       <Navbar></Navbar>
       <div className="profileClass">
         <div className="flex text-center flex-col mt-11 md:text-2xl text-white">
