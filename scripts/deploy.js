@@ -10,13 +10,17 @@ async function main() {
 
   await marketplace.deployed();
 
-  const data = {
-    address: marketplace.address,
-    abi: JSON.parse(marketplace.interface.format('json'))
+  console.log("Marketplace deployed:", marketplace.address);
+
+  if (hre.network.name != "hardhat" && hre.network.name != "localhost") {
+    const data = {
+      address: marketplace.address,
+      abi: JSON.parse(marketplace.interface.format('json'))
+    }
+    //This writes the ABI and address to the mktplace.json
+    fs.writeFileSync('./src/Marketplace.json', JSON.stringify(data))
   }
 
-  //This writes the ABI and address to the mktplace.json
-  fs.writeFileSync('./src/Marketplace.json', JSON.stringify(data))
 }
 
 main()

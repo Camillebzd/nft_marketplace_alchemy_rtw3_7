@@ -35,6 +35,9 @@ const NIGHTLY_PRIVATE_KEY =
 const REACT_APP_NIGHTLY_CHAINID =
   Number(process.env.REACT_APP_NIGHTLY_CHAINID) ||
   1337;
+const NIGHTLY_EXPLORER = 
+  process.env.NIGHTLY_EXPLORER ||
+  "";
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -82,8 +85,8 @@ module.exports = {
         network: "nightly",
         chainId: REACT_APP_NIGHTLY_CHAINID,
         urls: {
-          apiURL: "https://explorer.2024-01-15.etherlink-nightly.tzalpha.net/api",
-          browserURL: "https://explorer.2024-01-15.etherlink-nightly.tzalpha.net"
+          apiURL: `${NIGHTLY_EXPLORER}/api`,
+          browserURL: NIGHTLY_EXPLORER
         }
       }
     ]

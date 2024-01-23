@@ -21,5 +21,11 @@ REACT_APP_ETHERLINK_API_KEY=YOUCANCOPYME0000000000000000000000
 
 REACT_APP_PINATA_KEY=
 REACT_APP_PINATA_SECRET=
+```
 
+First deploy the Marketplace contract:
+```
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network etherlink
+npx hardhat verify --network etherlink <contract-address>
 ```
