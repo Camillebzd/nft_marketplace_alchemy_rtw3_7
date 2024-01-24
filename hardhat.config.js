@@ -18,15 +18,15 @@ const PRIVATE_KEY =
   "";
 
 const ETHERLINK_RPC_URL =
-  process.env.REACT_APP_API_URL ||
+  process.env.ETHERLINK_RPC_URL ||
   "https://node.ghostnet.etherlink.com";
 
 const NIGHTLY_RPC_URL =
-  process.env.REACT_APP_API_URL_NIGHTLY ||
+  process.env.NIGHTLY_RPC_URL ||
   "";
 
 const ETHERLINK_API_KEY = 
-  process.env.REACT_APP_ETHERLINK_API_KEY || 
+  process.env.ETHERLINK_API_KEY || 
   "";
 // Specific private key for the nightly chain with founds
 const NIGHTLY_PRIVATE_KEY =
@@ -39,11 +39,23 @@ const NIGHTLY_EXPLORER =
   process.env.NIGHTLY_EXPLORER ||
   "";
 
+const MUMBAI_RPC_URL =
+  process.env.MUMBAI_RPC_URL ||
+  "https://polygon-mumbai.g.alchemy.com/v2/your-api-key";
+const POLYGONSCAN_API_KEY = 
+  process.env.POLYGONSCAN_API_KEY || 
+  "";
+
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       chainId: 1337
+    },
+    mumbai: {
+      chainId: 80001,
+      url: MUMBAI_RPC_URL,
+      accounts: [PRIVATE_KEY],
     },
     etherlink: {
       chainId: 128123,
@@ -67,6 +79,7 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
+      polygonMumbai: POLYGONSCAN_API_KEY,
       etherlink: ETHERLINK_API_KEY,
       nightly: ETHERLINK_API_KEY
     },
