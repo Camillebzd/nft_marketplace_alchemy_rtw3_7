@@ -5,8 +5,9 @@ import {
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-const CHAINID = '0x' + Number(process.env.REACT_APP_NIGHTLY_CHAINID).toString(16);
-// const CHAINID = '0x' + Number(128123).toString(16); // Etherlink
+// const CHAINID = '0x' + Number(process.env.REACT_APP_NIGHTLY_CHAINID).toString(16);
+const CHAINID = '0x' + Number(128123).toString(16); // Etherlink
+// const CHAINID = '0x' + Number(80001).toString(16); // Mumbai
 
 function Navbar() {
 

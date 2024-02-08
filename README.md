@@ -27,8 +27,10 @@ Then install dependencies and deploy the Marketplace contract:
 ```
 npm install
 npx hardhat compile
-npx hardhat run scripts/deploy.js --network etherlink
+npx hardhat run scripts/deploy.js --network <your_network>
 ```
+
+**Important:** you also have to adapt the connect button of the dApp depending of the network you choose to use. You have to change the `CHAINID` variable at the top of the `src/components/Navbar.js` file.
 
 ## Run locally
 
