@@ -2,11 +2,11 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../Marketplace.json';
+import { ethers } from "ethers";
 
 export default function SellNFT () {
   const [formParams, updateFormParams] = useState({ name: '', description: '', price: ''});
   const [fileURL, setFileURL] = useState(null);
-  const ethers = require("ethers");
   const [message, updateMessage] = useState('');
 
   async function disableButton() {
